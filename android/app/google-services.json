@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "538990438816",
+    "firebase_url": "https://accesscontrol-509b8.firebaseio.com",
+    "project_id": "accesscontrol-509b8",
+    "storage_bucket": "accesscontrol-509b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538990438816:android:4f955186d282f575",
+        "android_client_info": {
+          "package_name": "com.int2.tlar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538990438816-0981fvpgbot2badts9jj73p44167fcaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGCX9EDaWJc2I3hdlZA919KWUlVT9sVbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
