@@ -61,7 +61,7 @@ class _profilState extends State<ProfileView> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 0.0),
                   child: Text(
-                    "Edit Profile",
+                    "Editar Perfil",
                     style: _txtEdit,
                   ),
                 ),
@@ -97,7 +97,7 @@ class _profilState extends State<ProfileView> {
                 children: <Widget>[
                   /// Call category class
                   category(
-                    txt: "Notifications",
+                    txt: "Notificaciones",
                     padding: 35.0,
                     image: "assets/icon/notification.png",
                     tap: () {
@@ -114,7 +114,7 @@ class _profilState extends State<ProfileView> {
                     ),
                   ),
                   category(
-                    txt: "Payment Methods",
+                    txt: "Métodos de pago",
                     padding: 35.0,
                     image: "assets/icon/creditAcount.png",
                     tap: () {
@@ -133,7 +133,7 @@ class _profilState extends State<ProfileView> {
                   ),
 
                   category(
-                    txt: "About the app",
+                    txt: "Acerca de TLAR",
                     padding: 35.0,
                     image: "assets/icon/aboutapp.png",
                     tap: () {
@@ -152,7 +152,7 @@ class _profilState extends State<ProfileView> {
 
                   category(
                     padding: 38.0,
-                    txt: "Sign Out",
+                    txt: "Cerrar Sesión",
                     image: "assets/icon/setting.png",
                     tap: () async {
 

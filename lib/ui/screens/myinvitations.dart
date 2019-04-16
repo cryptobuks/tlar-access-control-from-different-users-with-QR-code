@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tlar/models/invitation.dart';
 import 'package:tlar/state_widget.dart';
 import 'package:tlar/ui/screens/new_invitation.dart';
+import 'package:tlar/ui/screens/notifications_screen.dart';
 import 'package:tlar/widgets/invitation_card.dart';
 import 'package:tlar/widgets/no_items_screen.dart';
 
@@ -58,7 +59,13 @@ class MyInvitationsView extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: IconButton(
                         icon: Icon(Icons.notifications),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationsView()));
+
+                        },
                         iconSize: 30.0,
                       ),
                     ),
@@ -93,7 +100,7 @@ class MyInvitationsView extends StatelessWidget {
                     }
                   else
                     {
-                      return NoItems("There isn't invitations", "assets/img/noNotification.png");
+                      return NoItems("No hay invitaciones", "assets/img/noNotification.png");
                     }
                 },
               ),

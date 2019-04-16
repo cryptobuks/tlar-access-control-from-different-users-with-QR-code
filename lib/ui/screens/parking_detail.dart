@@ -127,7 +127,7 @@ class _ParkingDetailState extends State<ParkingDetail> {
                               padding: const EdgeInsets.only(
                                   top: 30.0, left: 20.0, right: 20.0),
                               child: Text(
-                                "The best place to share with your family",
+                                "El mejor lugar para compartir con tu familia",
                                 style: TextStyle(
                                     //fontFamily: "Popins",
                                     fontWeight: FontWeight.w400,
@@ -138,7 +138,7 @@ class _ParkingDetailState extends State<ParkingDetail> {
                             Padding(padding: EdgeInsets.only(top: 40.0)),
                             buttonCustom(
                               color: Color(0xFF4458be),
-                              txt: "Invite",
+                              txt: "Invitar",
                               ontap: () {
                                 Navigator.of(context).push(PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
@@ -148,7 +148,7 @@ class _ParkingDetailState extends State<ParkingDetail> {
                             Padding(padding: EdgeInsets.only(top: 10.0)),
                             buttonCustom(
                               color: Color(0xFF4458be),
-                              txt: "Historic",
+                              txt: "Historial de invitaciones",
                               ontap: () {
                                 Navigator.of(context).push(PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>

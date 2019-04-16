@@ -106,19 +106,19 @@ class _CardProfile_WidgetState extends State<CardProfile> with TickerProviderSta
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(0.0,16.0,0.0,12.0),
-                                  child: Text("Hi, "+ widget.stateSession.googleUser.displayName, style: TextStyle(fontSize: 25.0, fontFamily: 'League Spartan', fontWeight: FontWeight.w400),),
+                                  child: Text("Hola, "+ widget.stateSession.googleUser.displayName, style: TextStyle(fontSize: 25.0, fontFamily: 'League Spartan', fontWeight: FontWeight.w400),),
                                 ),
                               ),
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(0.0,16.0,0.0,12.0),
-                                  child: Text("¡Welcome to the best app for Access Control in Guatemala!", style: TextStyle(fontSize: 16.0),),
+                                  child: Text("¡Bienvenido a la mejor app de Control de Acceso en Guatemala!", style: TextStyle(fontSize: 16.0),),
                                 ),
                               ),
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(0.0,16.0,0.0,12.0),
-                                  child: Text("TODAY "+ formatDate(DateTime.now(), [dd, ' de ', M, ' de ', yyyy]), style: TextStyle(),),
+                                  child: Text("Hoy "+ formatDate(DateTime.now(), [dd, ' de ', M, ' de ', yyyy]), style: TextStyle(),),
                                 ),
                               ),
                             ],

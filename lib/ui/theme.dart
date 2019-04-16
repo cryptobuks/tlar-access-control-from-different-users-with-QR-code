@@ -18,7 +18,7 @@ ThemeData buildTheme() {
         ),
         // Used for the recipes' duration:
         caption: base.caption.copyWith(
-          color: const Color(0xFFCCC5AF),
+          color: const Color(0xFF7a84f1),
         ),
         body1: base.body1.copyWith(color: const Color.fromRGBO(58, 66, 86, 1.0))
     );

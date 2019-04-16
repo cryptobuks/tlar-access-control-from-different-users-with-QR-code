@@ -64,7 +64,7 @@ class _InvitationFormState extends State<InvitationForm> {
                           format: DateFormat('yyyy-MM-dd'),
                           editable: editable,
                           decoration: InputDecoration(
-                              labelText: 'Invitation Date',
+                              labelText: 'Fecha',
                               hasFloatingPlaceholder: false,
                               icon: const Icon(
                                 Icons.calendar_today,
@@ -79,7 +79,7 @@ class _InvitationFormState extends State<InvitationForm> {
                           format: formats[inputTypeTime],
                           editable: editable,
                           decoration: InputDecoration(
-                              labelText: 'Invitation Time',
+                              labelText: 'Hora',
                               hasFloatingPlaceholder: false,
                               icon: const Icon(
                                 Icons.access_time,
@@ -136,7 +136,7 @@ class _InvitationFormState extends State<InvitationForm> {
                             icon: const Icon(
                               Icons.phone_android,
                             ),
-                            labelText: "Guest Phonenumber",
+                            labelText: "Número invitado",
                             //labelStyle: decorationStyle,
                             hintText: "+50299999999",
                             //hintStyle: hintStyle,
@@ -153,7 +153,7 @@ class _InvitationFormState extends State<InvitationForm> {
                             icon: const Icon(
                               Icons.description,
                             ),
-                            labelText: "Description",
+                            labelText: "Descripción",
                             //labelStyle: decorationStyle,
                             //hintText: "+502 99999999",
                             //hintStyle: hintStyle,

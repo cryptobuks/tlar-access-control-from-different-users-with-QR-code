@@ -61,28 +61,10 @@ class InvitationCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding:
-              const EdgeInsets.only(top: 20.0, left: 20.0, right: 60.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "TLAR invitación",
-                    style: _txtCustomHead.copyWith(
-                        fontSize: 15.0, fontWeight: FontWeight.w600),
-                  ),
-                  Image.asset(
-                    "assets/tlar-logo.png",
-                    height: 30.0,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.only(
                   top: 20.0, bottom: 5.0, left: 20.0, right: 60.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,10 +75,19 @@ class InvitationCard extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(dateFormat),
+                        child: Row(
+                        children: <Widget>[
+                          Container(
+                            child: Icon(const IconData(59701, fontFamily: 'MaterialIcons')),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Text(dateFormat),
+                          ],
+                        ),
                       ),
                     ],
                   ),
+                  SizedBox(width: 20.0,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -106,30 +97,27 @@ class InvitationCard extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(timeFormat),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              child: Icon(const IconData(57745, fontFamily: 'MaterialIcons')),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(timeFormat),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "            ",
-                        style: _txtCustomSub,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text("          "),
-                      ),
-                    ],
-                  ),
+
                 ],
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(
                 top: 15.0,
-                bottom: 30.0,
+                bottom: 0.0,
                 left: 20.0,
                 right: 30.0,
               ),
@@ -145,26 +133,53 @@ class InvitationCard extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(invitation.guest.phonenumber),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              child: Icon(const IconData(58705, fontFamily: 'MaterialIcons')),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(invitation.guest.phonenumber),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Estado",
-                        style: _txtCustomSub,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(invitation.status),
-                      ),
-                    ],
+
+
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 15.0,
+                bottom: 15.0,
+                left: 20.0,
+                right: 30.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Descripción",
+                          style: _txtCustomSub,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(invitation.description),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
+
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -175,12 +190,12 @@ class InvitationCard extends StatelessWidget {
               },
               child: Container(
                   height: 40.0,
-                  width: 1000.0,
-                  color: Colors.blueGrey.withOpacity(0.1),
+                  //width: 800.0,
+                  color: const Color(0xFF4458be).withOpacity(0.1),
                   child: Center(
                       child: Text("Ver Detalles",
                           style: _txtCustomHead.copyWith(
-                              fontSize: 15.0, color: Colors.blueGrey)))),
+                              fontSize: 15.0)))),
             )
           ],
         ),

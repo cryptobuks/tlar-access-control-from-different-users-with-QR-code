@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tlar/models/parking.dart';
 import 'package:tlar/state_widget.dart';
+import 'package:tlar/ui/screens/notifications_screen.dart';
 import 'package:tlar/ui/screens/parking_detail.dart';
 import 'package:tlar/widgets/no_items_screen.dart';
 
@@ -14,7 +15,7 @@ class ParkingsView extends StatefulWidget {
 class _ParkingsState extends State<ParkingsView> {
   @override
   Widget build(BuildContext context) {
-    /// Component appbar
+    // Component appbar
     var _appbar = AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0.0,
@@ -37,7 +38,13 @@ class _ParkingsState extends State<ParkingsView> {
               alignment: Alignment.topRight,
               child: IconButton(
                 icon: Icon(Icons.notifications),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationsView()));
+
+                },
                 iconSize: 30.0,
                 color: Color(0xFF4458be),
               ),
@@ -52,16 +59,11 @@ class _ParkingsState extends State<ParkingsView> {
     // Getting data from Cloud
     CollectionReference collectionReference = Firestore.instance.collection('parkings');
     Stream<QuerySnapshot> stream;
-    //if (StateWidget.of(context).state.userSession != null) {
     stream = collectionReference
         .snapshots();
-//    } else {
-//      // Use snapshots of all recipes if recipeType has not been passed
-//      stream = collectionReference.
-//      where("user", isEqualTo: "")
-//          .snapshots();
-//    }
-    List <String> test = ['EHWyzldKa6ssdfsdfA3YL8CA2j'];
+
+
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Scaffold(
@@ -111,7 +113,6 @@ class itemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(flag);
     return Padding(
       padding:
       const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),

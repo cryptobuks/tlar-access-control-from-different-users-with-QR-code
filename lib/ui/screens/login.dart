@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
 
                                 },
                                 child: Text(
-                                  "You don't have an account yet? Signup",
+                                  "¿Aún no tienes una cuenta? Registrate",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13.0,
@@ -261,7 +261,7 @@ class buttonCustomFacebook extends StatelessWidget {
             ),
             Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
             Text(
-              "Login With Facebook",
+              "Accede con Facebook",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15.0,
@@ -299,7 +299,7 @@ class buttonCustomGoogle extends StatelessWidget {
             ),
             Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
             Text(
-              "Login With Google",
+              "Accede con Google",
               style: TextStyle(
                   color: Colors.black26,
                   fontSize: 15.0,
@@ -323,7 +323,7 @@ class buttonBlackBottom extends StatelessWidget {
         height: 55.0,
         width: 600.0,
         child: Text(
-          "Signin",
+          "Inicar Sesión",
           style: TextStyle(
               color: Colors.white,
               letterSpacing: 0.2,
