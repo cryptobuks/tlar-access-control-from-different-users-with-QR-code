@@ -47,10 +47,10 @@ Future<bool> newInvitationStore(Invitation invitation) {
       .add({
     "description": invitation.description,
     "usercreator": invitation.usercreator,
-    "date" : invitation.date.toString(),
+    "date" : invitation.date,
     "parking" : invitation.parking,
     "status" : "iniciada",
-    //"datetime": invitation.datetime,
+    "time": invitation.time,
     "guest" : {
       "dpi" : invitation.guest.dpi,
       "phonenumber" : invitation.guest.phonenumber

@@ -38,12 +38,6 @@ class InvitationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // Getting and casting dates
-    var formatter = new DateFormat('dd-MM-yyyy');
-    String dateFormat = formatter.format(invitation.date);
-
-    var formatterTime = new DateFormat('hh:mm');
-    String timeFormat = formatterTime.format(invitation.date);
 
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
@@ -81,7 +75,7 @@ class InvitationCard extends StatelessWidget {
                             child: Icon(const IconData(59701, fontFamily: 'MaterialIcons')),
                           ),
                           SizedBox(width: 5.0,),
-                          Text(dateFormat),
+                          Text(invitation.date),
                           ],
                         ),
                       ),
@@ -103,7 +97,7 @@ class InvitationCard extends StatelessWidget {
                               child: Icon(const IconData(57745, fontFamily: 'MaterialIcons')),
                             ),
                             SizedBox(width: 5.0,),
-                            Text(timeFormat),
+                            Text(invitation.time),
                           ],
                         ),
                       ),

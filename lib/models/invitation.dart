@@ -37,8 +37,8 @@ class Guest
 
 class Invitation {
   final String id;
-  DateTime date;
-  DateTime time;
+  String date;
+  String time;
   String parking;
   String usercreator;
   String description;
@@ -64,7 +64,8 @@ class Invitation {
   Invitation.fromMap(Map<String, dynamic> data, String id)
       : this(
     id: id,
-    date: DateTime.parse(data['date']) ,
+    date: data['date'] ,
+    time: data['time'],
     parking: data['parking'],
     usercreator: data['usercreator'],
     description: data['description'],

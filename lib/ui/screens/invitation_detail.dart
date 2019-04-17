@@ -72,11 +72,6 @@ class _InvitationDetailState extends State<InvitationDetail> {
   @override
   Widget build(BuildContext context) {
     //Manage different dates
-    var formatter = new DateFormat('dd-MM-yyyy');
-    String dateFormat = formatter.format(widget.invitation.date);
-
-    var formatterTime = new DateFormat('hh:mm');
-    String timeFormat = formatterTime.format(widget.invitation.date);
 
     return Scaffold(
       appBar: AppBar(
@@ -104,12 +99,12 @@ class _InvitationDetailState extends State<InvitationDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Fecha: "+dateFormat,
+                  "Fecha: "+widget.invitation.date,
                   style: _txtCustom,
                 ),
                 Padding(padding: EdgeInsets.only(top: 7.0)),
                 Text(
-                  "Hora: "+ timeFormat,
+                  "Hora: "+ widget.invitation.time,
                   style: _txtCustom,
                 ),
 

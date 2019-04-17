@@ -21,6 +21,10 @@ class InvitationForm extends StatefulWidget{
 class _InvitationFormState extends State<InvitationForm> {
 
   final  GlobalKey<FormState> form = GlobalKey<FormState>();
+
+  TextEditingController phoneTextFieldController = TextEditingController();
+  TextEditingController descriptionTextFieldController = TextEditingController();
+
   final formats = {
     InputType.both: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
     InputType.date: DateFormat('yyyy-MM-dd'),
@@ -36,8 +40,8 @@ class _InvitationFormState extends State<InvitationForm> {
   String _color = '';
   String _description = '';
   Invitation newInvitation = new Invitation();
-  String descriptionTest;
-  String phoneNumberForm;
+  String descriptionTest = '';
+  String phoneNumberForm = '';
   DateTime fechaHoraInvitacion;
 
   @override
@@ -88,44 +92,8 @@ class _InvitationFormState extends State<InvitationForm> {
                           onChanged: (dt) => setState(() => date2 = dt),
                         ),
                         Padding(padding: EdgeInsets.only(top: 10.0)),
-
-
-//                        new FormField<String>(
-//                          builder: (FormFieldState<String> state) {
-//                            return InputDecorator(
-//                              decoration: InputDecoration(
-//                                icon: const Icon(Icons.home),
-//                                labelText: 'Parqueo',
-//                                errorText: state.hasError ? state.errorText : null,
-//                              ),
-//                              isEmpty: _color == '',
-//                              child: new DropdownButtonHideUnderline(
-//                                child: new DropdownButton<String>(
-//                                  value: _color,
-//                                  isDense: true,
-//                                  onChanged: (String newValue) {
-//                                    setState(() {
-//                                      //newContact.favoriteColor = newValue;
-//                                      _color = newValue;
-//                                      state.didChange(newValue);
-//                                    });
-//                                  },
-//                                  items: _colors.map((String value) {
-//                                    return new DropdownMenuItem<String>(
-//                                      value: value,
-//                                      child: new Text(value),
-//                                    );
-//                                  }).toList(),
-//                                ),
-//                              ),
-//                            );
-//                          },
-//                          validator: (val) {
-//                            return val != '' ? null : 'Por favor seleccione un parqueo';
-//                          },
-//                        ),
-//                        Padding(padding: EdgeInsets.only(top: 10.0)),
                         TextFormField(
+                          controller: phoneTextFieldController,
                           validator: (val) {
                             return val != '' ? null : 'Por favor ingrese un número';
                           },
@@ -142,10 +110,16 @@ class _InvitationFormState extends State<InvitationForm> {
                             //hintStyle: hintStyle,
                             //errorText: _errorMessage,
                           ),
-                          onSaved: (val) => phoneNumberForm = val,
+                          onSaved: (value) {
+                            phoneNumberForm = value;
+                          },
                         ),
                         Padding(padding: EdgeInsets.only(top: 10.0)),
                         TextFormField(
+                          controller: descriptionTextFieldController,
+                          validator: (val) {
+                            return val != '' ? null : 'Por favor ingrese una descripción';
+                          },
                           decoration: InputDecoration(
                             isDense: false,
                             //enabled: this.status == AuthStatus.PHONE_AUTH,
@@ -159,7 +133,9 @@ class _InvitationFormState extends State<InvitationForm> {
                             //hintStyle: hintStyle,
                             //errorText: _errorMessage,
                           ),
-                          onSaved: (val) => descriptionTest = val,
+                          onSaved: (value) {
+                            descriptionTest = value;
+                          },
                         ),
 
                         Padding(padding: EdgeInsets.only(top: 40.0)),
@@ -205,24 +181,27 @@ class _InvitationFormState extends State<InvitationForm> {
           child: Text("No es válido el formulario")
       );
     } else {
-      print(date2);
+     // Converting date and time to String
+      var formatter = new DateFormat('dd-MM-yyyy');
+      String dateFormat = formatter.format(date);
 
-      formLocal.save(); //This invokes each onSaved event
-      fechaHoraInvitacion = date.add(date2.timeZoneOffset);
+      var formatterTime = new DateFormat('hh:mm');
+      String timeFormat = formatterTime.format(date2);
 
-      print (date);
-      Guest guestInvitation = new Guest(phonenumber: phoneNumberForm);
+      // Storing invitation into Cloud Firestore
+      Guest guestInvitation = new Guest(phonenumber: phoneTextFieldController.text);
       Invitation invitationForm =
         new Invitation(usercreator: StateWidget.of(context).state.userSession.id,
-          description: descriptionTest, date: fechaHoraInvitacion,
+          description: descriptionTextFieldController.text, date: dateFormat, time: timeFormat,
           guest: guestInvitation, parking: widget.parkingId);
+
+      // ... Storing
       newInvitationStore(invitationForm).then((result) {
         if (result)
           {
             Navigator.pop(context);
           }
       }).catchError((error) {
-        print('Error: $error');
         return false;
       });
 
@@ -235,7 +214,7 @@ class _InvitationFormState extends State<InvitationForm> {
       children: <Widget>[
         Container(
           height: MediaQuery.of(context).size.height * 0.2,
-          padding: EdgeInsets.all(40.0),
+          padding: EdgeInsets.all(35.0),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(color: Color(0xFF4458be)),
           child: Column(
@@ -251,7 +230,7 @@ class _InvitationFormState extends State<InvitationForm> {
                 width: 90.0,
                 child: new Divider(color: Colors.white),
               ),
-              SizedBox(height: 30.0),
+              //SizedBox(height: 30.0),
             ],
           ),
         ),

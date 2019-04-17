@@ -1,16 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:tlar/models/invitation.dart';
+import 'package:tlar/models/state.dart';
 import 'package:tlar/services/crud.dart';
 import 'package:tlar/state_widget.dart';
-import 'package:tlar/ui/screens/new_invitation.dart';
 import 'package:tlar/widgets/invitation_card.dart';
 import 'package:tlar/widgets/no_items_screen.dart';
+import 'package:tlar/widgets/radiobutton_item.dart';
 
 class InvitationsView extends StatefulWidget {
 
   final String parking;
-  InvitationsView(this.parking);
+  final StateModel stateSession;
+  InvitationsView(this.parking, @required this.stateSession);
 
 
   @override
@@ -22,28 +25,38 @@ class _InvitationsViewState extends State<InvitationsView>{
   TextEditingController editingController = TextEditingController();
   var queryResultSet = [];
   var tempSearchStore = [];
+  // Radio buttons for filter data from Firestore
+  List<RadioModel> filterOption = new List<RadioModel>();
+  Stream<QuerySnapshot> stream;
+  String todayDate = formatDate(DateTime.now(), [dd, '-', MM, '-', yyyy]);
+  String lastDayweek = formatDate(DateTime.now().subtract(new Duration(days: 7)), [dd, '-', MM, '-', yyyy]);
 
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+
+    super.initState();
+    filterOption.add(new RadioModel(true, 'Hoy', 'Hoy'));
+    filterOption.add(new RadioModel(false, 'Esta semana', 'Esta Semana'));
+    filterOption.add(new RadioModel(false, 'Todos', 'Todos'));
+
+    //Getting first data from Firestore where date is today
+
     CollectionReference collectionReference =
     Firestore.instance.collection('invitations');
-    Stream<QuerySnapshot> stream;
-    if (StateWidget.of(context).state.userSession != null) {
-      stream = collectionReference.
-      where("usercreator", isEqualTo: StateWidget.of(context).state.userSession.id)
-          .where("parking", isEqualTo: widget.parking)
-          //.where("date", isEqualTo:)
-          .limit(5)
-          .snapshots();
-    } else {
-      // Use snapshots of all recipes if recipeType has not been passed
-      stream = collectionReference.
-      where("usercreator", isEqualTo: "")
-          .snapshots();
-    }
+    stream = collectionReference.
+    where("parking", isEqualTo: widget.parking).
+    where("usercreator", isEqualTo: widget.stateSession.userSession.id).
+    where("date", isEqualTo: todayDate )
+        .snapshots();
 
-    // Define query depeneding on passed args
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    // Define query depending on passed args
     return Scaffold(
 
       body: Padding(
@@ -88,7 +101,7 @@ class _InvitationsViewState extends State<InvitationsView>{
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15.0, right: 15.0),
+              padding: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 10.0),
               child: Material(
                 elevation: 5.0,
                 borderRadius: BorderRadius.circular(5.0),
@@ -110,19 +123,54 @@ class _InvitationsViewState extends State<InvitationsView>{
               ),
             ),
 
-//            Padding(
-//              padding: const EdgeInsets.all(8.0),
-//              child: Container(
-//                decoration: BoxDecoration(
-//                    border: Border(bottom: BorderSide(color: Colors.black54))
-//                ),
-//                child: new Row(
-//                  children: <Widget>[
-//
-//                  ],
-//                ),
-//              ),
-//            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: filterOption
+                  .map((document) {
+                return new InkWell(
+                  //highlightColor: Colors.red,
+                  splashColor:  Color(0xFF4458be),
+                  onTap: () {
+                    CollectionReference collectionReference =
+                    Firestore.instance.collection('invitations');
+
+                    setState(() {
+                      filterOption.forEach((element) => element.isSelected = false);
+                      document.isSelected = true;
+
+                      // Implementing route cases for every filter
+                      if (document.text == 'Hoy'){
+                        stream = collectionReference.
+                        where("parking", isEqualTo: widget.parking).
+                        where("usercreator", isEqualTo: widget.stateSession.userSession.id).
+                        where("date", isEqualTo: todayDate )
+                            .snapshots();
+                      }
+
+                      else if(document.text == 'Esta Semana'){
+                        stream = collectionReference.
+                        where("parking", isEqualTo: widget.parking).
+                        where("usercreator", isEqualTo: widget.stateSession.userSession.id).
+                        where("date", isGreaterThanOrEqualTo: lastDayweek)
+                            .where("date", isLessThanOrEqualTo: todayDate)
+                            .snapshots();
+
+                      }
+                      else
+                      {
+                        stream = collectionReference.
+                        where("parking", isEqualTo: widget.parking).
+                        where("usercreator", isEqualTo: widget.stateSession.userSession.id)
+                            .snapshots();
+                      }
+
+                    });
+                  },
+                  child: new RadioItem(document),
+                );
+              },).toList(),
+            ),
+
             Expanded(
               child: new StreamBuilder(
                 stream: stream,
@@ -132,18 +180,12 @@ class _InvitationsViewState extends State<InvitationsView>{
                     return _buildLoadingIndicator();
                   if (snapshot.data.documents.length>0)
                   {
-
                     return new ListView(
                       children: snapshot.data.documents
-                      // Check if the argument ids contains document ID if ids has been passed:
-                      //.where((d) => ids == null || ids.contains(d.documentID))
                           .map((document) {
                         return new InvitationCard(
                           invitation:
                           Invitation.fromMap(document.data, document.documentID),
-                          //inFavorites:
-                          //appState.favorites.contains(document.documentID),
-                          //onFavoriteButtonPressed: _handleFavoritesListChanged,
                         );
                       }).toList(),
                     );
@@ -161,8 +203,6 @@ class _InvitationsViewState extends State<InvitationsView>{
         ),
       ),
     );
-
-
   }
 
 //  initiateSearch(value) {

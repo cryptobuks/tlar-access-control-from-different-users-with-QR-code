@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tlar/models/parking.dart';
+import 'package:tlar/state_widget.dart';
 import 'package:tlar/ui/screens/invitations_menu.dart';
 import 'package:tlar/ui/screens/new_invitation.dart';
 
@@ -152,7 +153,7 @@ class _ParkingDetailState extends State<ParkingDetail> {
                               ontap: () {
                                 Navigator.of(context).push(PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                    new InvitationsView(brand.id)));
+                                    new InvitationsView(brand.id, StateWidget.of(context).state)));
                               },
                             )
                           ],
