@@ -8,13 +8,13 @@ ThemeData buildTheme() {
         headline: base.headline.copyWith(
           fontFamily: 'Glacial Indifference',
           fontSize: 40.0,
-          color: const Color.fromRGBO(58, 66, 86, 1.0),
+          color: const Color(0xFF7a84f1),
         ),
         // Used for the recipes' title:
         title: base.title.copyWith(
           fontFamily: 'League Spartan',
           fontSize: 15.0,
-          color: const Color.fromRGBO(58, 66, 86, 1.0),
+          color: const Color(0xFF7a84f1)
         ),
         // Used for the recipes' duration:
         caption: base.caption.copyWith(

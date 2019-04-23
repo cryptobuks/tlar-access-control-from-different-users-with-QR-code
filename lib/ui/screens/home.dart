@@ -106,7 +106,7 @@ class _MyHomePageState extends State<Home> with TickerProviderStateMixin {
         return CardProfile(stateSession: appState);
 
       case 1:
-        return MyInvitationsView();
+        return MyInvitationsView(StateWidget.of(context).state);
 
 
       case 2:

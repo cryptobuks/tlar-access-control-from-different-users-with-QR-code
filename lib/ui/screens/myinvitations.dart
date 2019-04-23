@@ -1,31 +1,100 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tlar/models/invitation.dart';
-import 'package:tlar/state_widget.dart';
-import 'package:tlar/ui/screens/new_invitation.dart';
+import 'package:tlar/models/state.dart';
 import 'package:tlar/ui/screens/notifications_screen.dart';
+import 'package:tlar/ui/screens/parking_detail.dart';
 import 'package:tlar/widgets/invitation_card.dart';
 import 'package:tlar/widgets/no_items_screen.dart';
 
-class MyInvitationsView extends StatelessWidget {
+class MyInvitationsView extends StatefulWidget {
 
-  MyInvitationsView();
+
+  final StateModel stateSession;
+  MyInvitationsView(@required this.stateSession);
+
+  _MyInvitationsViewState createState() => _MyInvitationsViewState();
+
+}
+
+class _MyInvitationsViewState extends State<MyInvitationsView>{
+
+  InputType inputType = InputType.date;
+  bool editable = true;
+  DateTime date = DateTime.now();
+  Stream<QuerySnapshot> stream;
+  String todayDate = formatDate(DateTime.now(), [dd, '-', MM, '-', yyyy]);
+  DateTime _date;
+  String _dateFormat;
+
+  var _formatter = new DateFormat('dd-MM-yyyy');
+
+  Future<Null> _selectDate(BuildContext context) async {
+
+    print ("Okey");
+    DateTime initialDate;
+
+    if (widget.stateSession.filterActualDate == null)
+      {
+        initialDate = DateTime.now();
+      }
+    else
+      {
+        initialDate = widget.stateSession.filterActualDate;
+      }
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: new DateTime(2018),
+        lastDate: new DateTime(2020));
+
+    if (picked != null && picked != _date){
+
+      setState(() {
+        _date = picked;
+        _dateFormat = _formatter.format(_date);
+
+        //Saving temp date filter
+        widget.stateSession.filterDate_MyInvitations = _dateFormat;
+        widget.stateSession.filterActualDate = picked;
+
+        CollectionReference collectionReference =
+        Firestore.instance.collection('invitations');
+        stream = collectionReference.
+        where("guest.phonenumber", isEqualTo: widget.stateSession.userSession.phonenumber)
+        .where("date", isEqualTo: widget.stateSession.filterDate_MyInvitations )
+            .snapshots();
+
+      });
+
+    }
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _dateFormat = _formatter.format(DateTime.now());
+    _date = widget.stateSession.filterActualDate;
+
+    CollectionReference collectionReference =
+    Firestore.instance.collection('invitations');
+    stream = collectionReference.
+    where("guest.phonenumber", isEqualTo: widget.stateSession.userSession.phonenumber)
+    .where("date", isEqualTo: widget.stateSession.filterDate_MyInvitations )
+        .snapshots();
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference collectionReference =
-    Firestore.instance.collection('invitations');
-    Stream<QuerySnapshot> stream;
-    if (StateWidget.of(context).state.userSession != null) {
-      stream = collectionReference.
-          where("guest.phonenumber", isEqualTo: StateWidget.of(context).state.userSession.phonenumber)
-          .snapshots();
-    } else {
-      // Use snapshots of all recipes if recipeType has not been passed
-      stream = collectionReference.
-      where("guest.phonenumber", isEqualTo: "")
-          .snapshots();
-    }
+
     // Define query depeneding on passed args
     return Scaffold(
 
@@ -74,6 +143,19 @@ class MyInvitationsView extends StatelessWidget {
                 )
               ],
             ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: buttonCustom(
+                  color: Color(0xFF4458be),
+                  txt: "Filtrar",
+                  ontap: () {
+                    _selectDate(context);
+                  },
+                ),
+              ),
+            ),
+
             Expanded(
               child: new StreamBuilder(
                 stream: stream,
@@ -82,26 +164,26 @@ class MyInvitationsView extends StatelessWidget {
                   if (!snapshot.hasData)
                     return _buildLoadingIndicator();
                   if (snapshot.data.documents.length>0)
-                    {
-                      return new ListView(
-                        children: snapshot.data.documents
-                        // Check if the argument ids contains document ID if ids has been passed:
-                        //.where((d) => ids == null || ids.contains(d.documentID))
-                            .map((document) {
-                          return new InvitationCard(
-                            invitation:
-                            Invitation.fromMap(document.data, document.documentID),
-                            //inFavorites:
-                            //appState.favorites.contains(document.documentID),
-                            //onFavoriteButtonPressed: _handleFavoritesListChanged,
-                          );
-                        }).toList(),
-                      );
-                    }
+                  {
+                    return new ListView(
+                      children: snapshot.data.documents
+                      // Check if the argument ids contains document ID if ids has been passed:
+                      //.where((d) => ids == null || ids.contains(d.documentID))
+                          .map((document) {
+                        return new InvitationCard(
+                          invitation:
+                          Invitation.fromMap(document.data, document.documentID),
+                          //inFavorites:
+                          //appState.favorites.contains(document.documentID),
+                          //onFavoriteButtonPressed: _handleFavoritesListChanged,
+                        );
+                      }).toList(),
+                    );
+                  }
                   else
-                    {
-                      return NoItems("No hay invitaciones", "assets/img/noNotification.png");
-                    }
+                  {
+                    return NoItems("No hay invitaciones para el $_dateFormat", "assets/img/noInvitation.png");
+                  }
                 },
               ),
             ),
@@ -118,5 +200,10 @@ class MyInvitationsView extends StatelessWidget {
       child: new CircularProgressIndicator(),
     );
   }
-
 }
+
+
+
+
+
+

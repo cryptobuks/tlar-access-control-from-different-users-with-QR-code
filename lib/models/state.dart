@@ -13,6 +13,8 @@ class StateModel {
   bool codeTimeOut = false;
   User userSession;
   List<String> parkings;
+  String filterDate_MyInvitations;
+  DateTime filterActualDate;
 
   StateModel({
     this.isLoading = false,

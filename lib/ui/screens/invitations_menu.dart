@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tlar/models/invitation.dart';
 import 'package:tlar/models/state.dart';
 import 'package:tlar/services/crud.dart';
@@ -28,6 +29,7 @@ class _InvitationsViewState extends State<InvitationsView>{
   // Radio buttons for filter data from Firestore
   List<RadioModel> filterOption = new List<RadioModel>();
   Stream<QuerySnapshot> stream;
+  var _formatter = new DateFormat('dd-MM-yyyy');
   String todayDate = formatDate(DateTime.now(), [dd, '-', MM, '-', yyyy]);
   String lastDayweek = formatDate(DateTime.now().add(new Duration(days: 7)), [dd, '-', MM, '-', yyyy]);
 
@@ -39,6 +41,10 @@ class _InvitationsViewState extends State<InvitationsView>{
     filterOption.add(new RadioModel(true, 'Hoy', 'Hoy'));
     filterOption.add(new RadioModel(false, 'Esta semana', 'Esta Semana'));
     filterOption.add(new RadioModel(false, 'Todos', 'Todos'));
+
+    // Parsing todayDate
+    todayDate = _formatter.format(DateTime.now());
+    lastDayweek = _formatter.format(DateTime.now().add(new Duration(days: 7)));
 
     //Getting first data from Firestore where date is today
 
@@ -192,7 +198,7 @@ class _InvitationsViewState extends State<InvitationsView>{
                   }
                   else
                   {
-                    return NoItems("Sin invitaciones", "assets/img/noNotification.png");
+                    return NoItems("Sin invitaciones", "assets/img/noInvitation.png");
 
                   }
 
