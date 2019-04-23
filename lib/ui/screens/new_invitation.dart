@@ -48,123 +48,127 @@ class _InvitationFormState extends State<InvitationForm> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Column(
+      body:
+
+      Stack(
         children: <Widget>[
-          _topContent(),
-          Expanded(
-            child: Container(
-              child: Padding(
-                // Padding before and after the list view:
-                padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
-                child: Card(
-                  elevation: 8.0,
-                  child: Form(
-                    key: form,
-                    child: ListView(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 30.0),
-                      children: <Widget>[
-                        DateTimePickerFormField(
-                          inputType: inputType,
-                          format: DateFormat('yyyy-MM-dd'),
-                          editable: editable,
-                          decoration: InputDecoration(
-                              labelText: 'Fecha',
-                              hasFloatingPlaceholder: false,
-                              icon: const Icon(
-                                Icons.calendar_today,
-                              )
-                          ),
-                          onChanged: (dt) => setState(() => date = dt),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 10.0)),
-
-                        DateTimePickerFormField(
-                          inputType: inputTypeTime,
-                          format: formats[inputTypeTime],
-                          editable: editable,
-                          decoration: InputDecoration(
-                              labelText: 'Hora',
-                              hasFloatingPlaceholder: false,
-                              icon: const Icon(
-                                Icons.access_time,
-                              )
-                          ),
-                          onChanged: (dt) => setState(() => date2 = dt),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 10.0)),
-                        TextFormField(
-                          controller: phoneTextFieldController,
-                          validator: (val) {
-                            return val != '' ? null : 'Por favor ingrese un número';
-                          },
-                          decoration: InputDecoration(
-                            isDense: false,
-                            //enabled: this.status == AuthStatus.PHONE_AUTH,
-                            counterText: "",
-                            icon: const Icon(
-                              Icons.phone_android,
+          Column(
+            children: <Widget>[
+              _topContent(),
+              Expanded(
+                child: Container(
+                  child: Padding(
+                    // Padding before and after the list view:
+                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+                    child: Card(
+                      elevation: 8.0,
+                      child: Form(
+                        key: form,
+                        child: ListView(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 30.0),
+                          children: <Widget>[
+                            DateTimePickerFormField(
+                              inputType: inputType,
+                              format: DateFormat('yyyy-MM-dd'),
+                              editable: editable,
+                              decoration: InputDecoration(
+                                  labelText: 'Fecha',
+                                  hasFloatingPlaceholder: false,
+                                  icon: const Icon(
+                                    Icons.calendar_today,
+                                  )
+                              ),
+                              onChanged: (dt) => setState(() => date = dt),
                             ),
-                            labelText: "Número invitado",
-                            //labelStyle: decorationStyle,
-                            hintText: "+50299999999",
-                            //hintStyle: hintStyle,
-                            //errorText: _errorMessage,
-                          ),
-                          onSaved: (value) {
-                            phoneNumberForm = value;
-                          },
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 10.0)),
-                        TextFormField(
-                          controller: descriptionTextFieldController,
-                          validator: (val) {
-                            return val != '' ? null : 'Por favor ingrese una descripción';
-                          },
-                          decoration: InputDecoration(
-                            isDense: false,
-                            //enabled: this.status == AuthStatus.PHONE_AUTH,
-                            counterText: "",
-                            icon: const Icon(
-                              Icons.description,
+                            Padding(padding: EdgeInsets.only(top: 10.0)),
+
+                            DateTimePickerFormField(
+                              inputType: inputTypeTime,
+                              format: formats[inputTypeTime],
+                              editable: editable,
+                              decoration: InputDecoration(
+                                  labelText: 'Hora',
+                                  hasFloatingPlaceholder: false,
+                                  icon: const Icon(
+                                    Icons.access_time,
+                                  )
+                              ),
+                              onChanged: (dt) => setState(() => date2 = dt),
                             ),
-                            labelText: "Descripción",
-                            //labelStyle: decorationStyle,
-                            //hintText: "+502 99999999",
-                            //hintStyle: hintStyle,
-                            //errorText: _errorMessage,
-                          ),
-                          onSaved: (value) {
-                            descriptionTest = value;
-                          },
+                            Padding(padding: EdgeInsets.only(top: 10.0)),
+                            TextFormField(
+                              controller: phoneTextFieldController,
+                              validator: (val) {
+                                return val != '' ? null : 'Por favor ingrese un número';
+                              },
+                              decoration: InputDecoration(
+                                isDense: false,
+                                //enabled: this.status == AuthStatus.PHONE_AUTH,
+                                counterText: "",
+                                icon: const Icon(
+                                  Icons.phone_android,
+                                ),
+                                labelText: "Número invitado",
+                                //labelStyle: decorationStyle,
+                                hintText: "+50299999999",
+                                //hintStyle: hintStyle,
+                                //errorText: _errorMessage,
+                              ),
+                              onSaved: (value) {
+                                phoneNumberForm = value;
+                              },
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 10.0)),
+                            TextFormField(
+                              controller: descriptionTextFieldController,
+                              validator: (val) {
+                                return val != '' ? null : 'Por favor ingrese una descripción';
+                              },
+                              decoration: InputDecoration(
+                                isDense: false,
+                                //enabled: this.status == AuthStatus.PHONE_AUTH,
+                                counterText: "",
+                                icon: const Icon(
+                                  Icons.description,
+                                ),
+                                labelText: "Descripción",
+                                //labelStyle: decorationStyle,
+                                //hintText: "+502 99999999",
+                                //hintStyle: hintStyle,
+                                //errorText: _errorMessage,
+                              ),
+                              onSaved: (value) {
+                                descriptionTest = value;
+                              },
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 40.0)),
+
+                          ],
+
                         ),
-
-                        Padding(padding: EdgeInsets.only(top: 40.0)),
-
-                        buttonCustom(
-                          color: Color(0xFF4458be),
-                          txt: "Invitar",
-                          ontap: () {
-                            _submitForm();
-                          },
-                        ),
-//                        new Container(
-//                            padding: const EdgeInsets.only(left: 40.0, top: 20.0),
-//                            child: new RaisedButton(
-//                              //color: Color(0xFF4458be),
-//                                child: Text(
-//                                  "Invitar",
-//                                  style: TextStyle(
-//                                    color: Colors.white,
-//                                  ),
-//                                ),
-//                              onPressed: _submitForm,
-//                            )),
-                      ],
-
+                      ),
                     ),
                   ),
                 ),
               ),
+            ],
+          ),
+
+          Positioned(
+            bottom: 60.0,
+            left: 60.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                buttonCustom(
+                  color: Color(0xFF4458be),
+                  txt: "Invitar",
+                  ontap: () {
+                    _submitForm();
+                  },
+                ),
+              ],
             ),
           ),
         ],
@@ -216,7 +220,21 @@ class _InvitationFormState extends State<InvitationForm> {
           height: MediaQuery.of(context).size.height * 0.2,
           padding: EdgeInsets.all(35.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color(0xFF4458be)),
+          decoration: BoxDecoration(
+              color: Color(0xFF4458be),
+              boxShadow: <BoxShadow>[
+                BoxShadow (
+                  color: const Color(0xcc000000),
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 4.0,
+                ),
+                BoxShadow (
+                  color: const Color(0x80000000),
+                  offset: Offset(0.0, 6.0),
+                  blurRadius: 20.0,
+              ),
+            ],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

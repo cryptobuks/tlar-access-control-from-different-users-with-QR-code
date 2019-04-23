@@ -140,21 +140,29 @@ class _ParkingDetailState extends State<ParkingDetail> {
                             buttonCustom(
                               color: Color(0xFF4458be),
                               txt: "Invitar",
-                              ontap: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                    new InvitationForm(parkingId: brand.id)));
-                              },
+                              ontap: ()
+                              {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InvitationForm(parkingId: brand.id)));
+
+                              }
+
                             ),
                             Padding(padding: EdgeInsets.only(top: 10.0)),
                             buttonCustom(
                               color: Color(0xFF4458be),
                               txt: "Historial de invitaciones",
-                              ontap: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                    new InvitationsView(brand.id, StateWidget.of(context).state)));
-                              },
+                              ontap: ()
+                              {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InvitationsView(brand.id, StateWidget.of(context).state)));
+
+                              }
+                              ,
                             )
                           ],
                         ),
@@ -357,7 +365,9 @@ class buttonCustom extends StatelessWidget {
         width: 300.0,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(20.0)
+          borderRadius: BorderRadius.all(
+            const Radius.circular(30.0)
+          ),
         ),
         child: Center(
             child: Text(

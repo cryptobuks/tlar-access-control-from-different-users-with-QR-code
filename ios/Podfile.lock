@@ -29,7 +29,7 @@ PODS:
     - Firebase/CoreOnly
     - FirebaseMessaging (= 3.4.0)
   - firebase_auth (0.0.1):
-    - Firebase/Auth
+    - Firebase/Auth (~> 5.19)
     - Firebase/Core
     - Flutter
   - firebase_core (0.0.1):
@@ -209,7 +209,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   cloud_firestore: cd6e849ecb8ab43e5a7a5f1f169304ca65436c03
   Firebase: c60d49e9c2630875a96207d15e2affb8364996d1
-  firebase_auth: 02ced56521bc9f220d40edda27b1ec5a2fcdf01e
+  firebase_auth: e32ab45c234bdf847b7777f5b097ce4f7d26879f
   firebase_core: ce5006bb48508ee4e71e0f429a3f519bb8ee2961
   firebase_messaging: b25b2fa94e685146bcf9d706ed87b4e95cd2a17d
   FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0

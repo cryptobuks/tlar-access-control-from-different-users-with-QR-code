@@ -29,7 +29,7 @@ class _InvitationsViewState extends State<InvitationsView>{
   List<RadioModel> filterOption = new List<RadioModel>();
   Stream<QuerySnapshot> stream;
   String todayDate = formatDate(DateTime.now(), [dd, '-', MM, '-', yyyy]);
-  String lastDayweek = formatDate(DateTime.now().subtract(new Duration(days: 7)), [dd, '-', MM, '-', yyyy]);
+  String lastDayweek = formatDate(DateTime.now().add(new Duration(days: 7)), [dd, '-', MM, '-', yyyy]);
 
 
   @override
@@ -151,8 +151,8 @@ class _InvitationsViewState extends State<InvitationsView>{
                         stream = collectionReference.
                         where("parking", isEqualTo: widget.parking).
                         where("usercreator", isEqualTo: widget.stateSession.userSession.id).
-                        where("date", isGreaterThanOrEqualTo: lastDayweek)
-                            .where("date", isLessThanOrEqualTo: todayDate)
+                        where("date", isGreaterThanOrEqualTo: todayDate)
+                            .where("date", isLessThanOrEqualTo: lastDayweek)
                             .snapshots();
 
                       }
