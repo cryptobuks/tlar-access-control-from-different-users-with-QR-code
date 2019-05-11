@@ -11,8 +11,6 @@ import 'package:tlar/models/user.dart';
 import 'package:tlar/ui/logger.dart';
 import 'package:tlar/utils/auth.dart';
 import 'package:tlar/utils/store.dart';
-import 'package:tlar/widgets/masked_text.dart';
-
 
 class StateWidget extends StatefulWidget {
   final StateModel state;

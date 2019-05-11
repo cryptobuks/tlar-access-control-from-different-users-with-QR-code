@@ -113,24 +113,6 @@ class _profilState extends State<ProfileView> {
                       height: 2.0,
                     ),
                   ),
-                  category(
-                    txt: "Métodos de pago",
-                    padding: 35.0,
-                    image: "assets/icon/creditAcount.png",
-                    tap: () {
-//                      Navigator.of(context).push(PageRouteBuilder(
-//                          pageBuilder: (_, __, ___) =>
-//                          new creditCardSetting()));
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, left: 85.0, right: 30.0),
-                    child: Divider(
-                      color: Colors.black12,
-                      height: 2.0,
-                    ),
-                  ),
 
                   category(
                     txt: "Acerca de TLAR",

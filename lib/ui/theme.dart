@@ -18,9 +18,14 @@ ThemeData buildTheme() {
         ),
         // Used for the recipes' duration:
         caption: base.caption.copyWith(
+          fontFamily: 'Glacial Indifference',
           color: const Color(0xFF7a84f1),
         ),
-        body1: base.body1.copyWith(color: const Color.fromRGBO(58, 66, 86, 1.0))
+        body1: base.body1.copyWith(
+            color: const Color.fromRGBO(58, 66, 86, 1.0),
+                fontFamily: 'Glacial Indifference',
+            fontSize: 15.0
+        )
     );
   }
 

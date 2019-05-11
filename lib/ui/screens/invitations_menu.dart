@@ -31,7 +31,7 @@ class _InvitationsViewState extends State<InvitationsView>{
   Stream<QuerySnapshot> stream;
   var _formatter = new DateFormat('dd-MM-yyyy');
   String todayDate = formatDate(DateTime.now(), [dd, '-', MM, '-', yyyy]);
-  String lastDayweek = formatDate(DateTime.now().add(new Duration(days: 7)), [dd, '-', MM, '-', yyyy]);
+  String lastDayweek = formatDate(DateTime.now().add(new Duration(days: 10)), [dd, '-', MM, '-', yyyy]);
 
 
   @override
@@ -192,6 +192,7 @@ class _InvitationsViewState extends State<InvitationsView>{
                         return new InvitationCard(
                           invitation:
                           Invitation.fromMap(document.data, document.documentID),
+                          myInvitation: false,
                         );
                       }).toList(),
                     );

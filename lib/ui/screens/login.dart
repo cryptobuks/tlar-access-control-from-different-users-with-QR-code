@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tlar/state_widget.dart';
 import 'package:tlar/widgets/google_sign_in_button.dart';
+import 'package:tlar/widgets/textform.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -40,9 +41,6 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    mediaQueryData.devicePixelRatio;
-    mediaQueryData.size.width;
-    mediaQueryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -135,20 +133,20 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                             /// TextFromField Email
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 10.0)),
-                            textFromField(
+                            TextFromField(
                               icon: Icons.email,
                               password: false,
-                              email: "Email",
+                              field: "Email",
                               inputType: TextInputType.emailAddress,
                             ),
 
                             /// TextFromField Password
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5.0)),
-                            textFromField(
+                            TextFromField(
                               icon: Icons.vpn_key,
                               password: true,
-                              email: "Password",
+                              field: "Password",
                               inputType: TextInputType.text,
                             ),
 
@@ -159,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
 
                                 },
                                 child: Text(
-                                  "¿Aún no tienes una cuenta? Registrate",
+                                  "¿Aún no tienes una cuenta en TLAR? Registrate",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13.0,
@@ -188,54 +186,6 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   }
 }
 
-/// textfromfield custom class
-class textFromField extends StatelessWidget {
-  bool password;
-  String email;
-  IconData icon;
-  TextInputType inputType;
-
-  textFromField({this.email, this.icon, this.inputType, this.password});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        height: 60.0,
-        alignment: AlignmentDirectional.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14.0),
-            color: Colors.white,
-            boxShadow: [BoxShadow(blurRadius: 10.0, color: Colors.black12)]),
-        padding:
-        EdgeInsets.only(left: 20.0, right: 30.0, top: 0.0, bottom: 0.0),
-        child: Theme(
-          data: ThemeData(
-            hintColor: Colors.transparent,
-          ),
-          child: TextFormField(
-            obscureText: password,
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                labelText: email,
-                icon: Icon(
-                  icon,
-                  color: Colors.black38,
-                ),
-                labelStyle: TextStyle(
-                    fontSize: 15.0,
-                    //fontFamily: 'Sans',
-                    letterSpacing: 0.3,
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w600)),
-            keyboardType: inputType,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 ///buttonCustomFacebook class
 class buttonCustomFacebook extends StatelessWidget {
@@ -319,24 +269,30 @@ class buttonBlackBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(30.0),
-      child: Container(
-        height: 55.0,
-        width: 600.0,
-        child: Text(
-          "Inicar Sesión",
-          style: TextStyle(
-              color: Colors.white,
-              letterSpacing: 0.2,
-              //fontFamily: "Sans",
-              fontSize: 18.0,
-              fontWeight: FontWeight.w800),
+      child: InkWell(
+        onTap: () {
+          print("Hola mundo");
+
+        },
+        child: Container(
+          height: 55.0,
+          width: 600.0,
+          child: Text(
+            "Iniciar Sesión",
+            style: TextStyle(
+                color: Colors.white,
+                letterSpacing: 0.2,
+                //fontFamily: "Sans",
+                fontSize: 18.0,
+                fontWeight: FontWeight.w800),
+          ),
+          alignment: FractionalOffset.center,
+          decoration: BoxDecoration(
+              boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 15.0)],
+              borderRadius: BorderRadius.circular(30.0),
+              gradient: LinearGradient(
+                  colors: <Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
         ),
-        alignment: FractionalOffset.center,
-        decoration: BoxDecoration(
-            boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 15.0)],
-            borderRadius: BorderRadius.circular(30.0),
-            gradient: LinearGradient(
-                colors: <Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:tlar/models/invitation.dart';
+import 'package:tlar/models/event.dart';
 List<String> getFavoritesIDs() {
   return [
     '0',
@@ -55,6 +55,25 @@ Future<bool> newInvitationStore(Invitation invitation) {
       "dpi" : invitation.guest.dpi,
       "phonenumber" : invitation.guest.phonenumber
     }
+  }).then((result) {
+    return true;
+  }).catchError((error) {
+    print('---------Error here...: $error');
+    return false;
+  });
+}
+
+
+Future<bool> newEventStore(Event event) {
+  return Firestore.instance
+      .collection('events')
+      .add({
+    "date": event.date,
+    "time": event.time,
+    "invitation": event.invitation,
+    "title": event.title,
+    "message": event.message
+
   }).then((result) {
     return true;
   }).catchError((error) {

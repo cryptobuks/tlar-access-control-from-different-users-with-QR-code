@@ -29,12 +29,12 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
   String todayDate = formatDate(DateTime.now(), [dd, '-', MM, '-', yyyy]);
   DateTime _date;
   String _dateFormat;
+  TextEditingController dateController = new TextEditingController();
 
   var _formatter = new DateFormat('dd-MM-yyyy');
 
   Future<Null> _selectDate(BuildContext context) async {
 
-    print ("Okey");
     DateTime initialDate;
 
     if (widget.stateSession.filterActualDate == null)
@@ -51,7 +51,7 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
         firstDate: new DateTime(2018),
         lastDate: new DateTime(2020));
 
-    if (picked != null && picked != _date){
+    if (picked != null && picked != widget.stateSession.filterActualDate){
 
       setState(() {
         _date = picked;
@@ -60,6 +60,7 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
         //Saving temp date filter
         widget.stateSession.filterDate_MyInvitations = _dateFormat;
         widget.stateSession.filterActualDate = picked;
+        dateController.text = _dateFormat;
 
         CollectionReference collectionReference =
         Firestore.instance.collection('invitations');
@@ -79,8 +80,17 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
     // TODO: implement initState
     super.initState();
 
-    _dateFormat = _formatter.format(DateTime.now());
+    if (widget.stateSession.filterActualDate == null)
+    {
+      _dateFormat = _formatter.format(DateTime.now());
+    }
+    else
+    {
+      _dateFormat = _formatter.format(widget.stateSession.filterActualDate);
+    }
+
     _date = widget.stateSession.filterActualDate;
+    dateController.text = _dateFormat;
 
     CollectionReference collectionReference =
     Firestore.instance.collection('invitations');
@@ -89,13 +99,14 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
     .where("date", isEqualTo: widget.stateSession.filterDate_MyInvitations )
         .snapshots();
 
-
   }
 
   @override
   Widget build(BuildContext context) {
 
-    // Define query depeneding on passed args
+
+
+    // Define query depending on passed args
     return Scaffold(
 
       body: Padding(
@@ -105,17 +116,12 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
           children: <Widget>[
             Stack(
               children: <Widget>[
-                Container(
-                  height: 50.0,
-                  width: double.infinity,
-                ),
 
-                SizedBox(height: 15.0),
                 Row(
                   children: <Widget>[
                     SizedBox(width: 15.0),
                     Container(
-                      alignment: Alignment.topLeft,
+                      //alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: Icon(Icons.menu),
                         onPressed: () {},
@@ -125,7 +131,7 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
                     SizedBox(
                         width: MediaQuery.of(context).size.width - 120.0),
                     Container(
-                      alignment: Alignment.topRight,
+                      //alignment: Alignment.topRight,
                       child: IconButton(
                         icon: Icon(Icons.notifications),
                         onPressed: () {
@@ -143,19 +149,48 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
                 )
               ],
             ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: buttonCustom(
-                  color: Color(0xFF4458be),
-                  txt: "Filtrar",
-                  ontap: () {
-                    _selectDate(context);
-                  },
-                ),
-              ),
-            ),
+            Stack(
+              children: <Widget>[
 
+
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: 200.0,
+                      //height: 50.0,
+                      //alignment: Alignment.topLeft,
+                      child: TextField(
+                        controller: dateController,
+                        enabled: false,
+                        decoration: new InputDecoration(
+                            border: new OutlineInputBorder(
+                                borderSide: new BorderSide(color: Colors.black54)
+                            ),
+                            //hintText: 'Tell us about yourself',
+                            
+                            helperText: 'Seleccione una fecha',
+                            labelText: 'Filtro',
+                            //prefixIcon: const Icon(Icons.panorama_fish_eye, color: Colors.green,),
+                            prefixText: '     ',
+                            //suffixText: 'USD',
+                            suffixStyle: const TextStyle(color: Colors.green)),
+                      ),
+                    ),
+
+
+                  ],
+                ),
+                Positioned(
+                  right: 110.0,
+                  top: 3.0,
+                  //alignment: Alignment.topRight,
+                    child: _buildAddCalendarButton(Icons.calendar_today, Colors.white)
+                ),
+
+              ],
+            ),
             Expanded(
               child: new StreamBuilder(
                 stream: stream,
@@ -173,6 +208,8 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
                         return new InvitationCard(
                           invitation:
                           Invitation.fromMap(document.data, document.documentID),
+                          snapshot: document,
+                          myInvitation: true,
                           //inFavorites:
                           //appState.favorites.contains(document.documentID),
                           //onFavoriteButtonPressed: _handleFavoritesListChanged,
@@ -198,6 +235,27 @@ class _MyInvitationsViewState extends State<MyInvitationsView>{
   Center _buildLoadingIndicator() {
     return Center(
       child: new CircularProgressIndicator(),
+    );
+  }
+
+  RawMaterialButton _buildAddCalendarButton(IconData iconButton, Color colorButton) {
+    return RawMaterialButton(
+      constraints: const BoxConstraints(
+          minWidth: 40.0, minHeight: 40.0
+      ),
+      onPressed:
+          () => {
+          _selectDate(context)
+          },
+      child: Icon(
+        // Conditional expression:
+        // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
+        iconButton,
+        color: Theme.of(context).primaryColorLight,
+      ),
+      elevation: 0.5,
+      fillColor: colorButton,
+      shape: CircleBorder(),
     );
   }
 }

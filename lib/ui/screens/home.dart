@@ -83,8 +83,8 @@ class _MyHomePageState extends State<Home> with TickerProviderStateMixin {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(iconData: Icons.home, title: "Inicio"),
-          TabData(iconData: Icons.timer_off, title: "Invitaciones"),
-          TabData(iconData: Icons.time_to_leave, title: "Parqueos"),
+          TabData(iconData: Icons.timer_off, title: "Mis citas"),
+          TabData(iconData: Icons.time_to_leave, title: "Sitios"),
           TabData(iconData: Icons.account_circle, title: "Perfil")
         ],
         onTabChangedListener: (position) {
